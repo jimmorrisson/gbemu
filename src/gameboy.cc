@@ -1,4 +1,6 @@
 #include "gameboy.h"
+#include <fstream>
+#include <iostream>
 
 Gameboy::Gameboy(const std::vector<u8>& cartridge_data, Options& options,
                  const std::vector<u8>& save_data)
@@ -15,6 +17,7 @@ Gameboy::Gameboy(const std::vector<u8>& cartridge_data, Options& options,
         ? LogLevel::Trace
         : LogLevel::Info
     );
+    cpu.initialise();
 }
 
 void Gameboy::button_pressed(GbButton button) {
@@ -58,6 +61,14 @@ void Gameboy::tick() {
     auto cycles = cpu.tick();
     elapsed_cycles += cycles.cycles;
 
+    auto& vram = video.get_vram();
+    if (std::any_of(vram.begin(), vram.end(), [](u8 byte) {
+        return byte != 0;
+    })) {
+        std::ofstream outfile("/tmp/test", std::ios::out | std::ios::binary); 
+        outfile.write(reinterpret_cast<const char*>(&vram[0]), vram.size());
+        exit(0);
+    }
     video.tick(cycles);
     timer.tick(cycles.cycles);
 }

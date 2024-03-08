@@ -14,6 +14,8 @@ add_warnings()
 
 declare_library(gbemu-core src)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 # SFML target
 # find_package(SFML 2 COMPONENTS system window graphics)
 

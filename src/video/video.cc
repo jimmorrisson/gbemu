@@ -88,7 +88,7 @@ void Video::tick(Cycles cycles) {
 
                 /* Line 155 (index 154) is the last line */
                 if (line == 154) {
-                    write_sprites();
+                    // write_sprites();
                     draw();
                     buffer.reset();
                     line.reset();
@@ -118,7 +118,7 @@ void Video::write_scanline(u8 current_line) {
     }
 
     if (window_enabled() && !debug_disable_window) {
-        draw_window_line(current_line);
+        // draw_window_line(current_line);
     }
 }
 

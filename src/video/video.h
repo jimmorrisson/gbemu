@@ -66,6 +66,10 @@ public:
     bool debug_disable_sprites = false;
     bool debug_disable_window = false;
 
+    const std::vector<u8>& get_vram() {
+        return video_ram;
+    }
+
 private:
     void write_scanline(u8 current_line);
     void write_sprites();

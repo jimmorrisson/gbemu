@@ -46,7 +46,7 @@ public:
 
     ByteRegister interrupt_flag;
     ByteRegister interrupt_enabled;
-
+    void initialise();
 private:
     void handle_interrupts();
     auto handle_interrupt(u8 interrupt_bit, u16 interrupt_vector, u8 fired_interrupts) -> bool;
