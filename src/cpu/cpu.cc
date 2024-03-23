@@ -6,6 +6,8 @@
 #include "../util/bitwise.h"
 #include "../util/log.h"
 
+#include <iostream>
+
 using bitwise::compose_bytes;
 
 CPU::CPU(Gameboy& inGb, Options& inOptions) :
@@ -16,12 +18,31 @@ CPU::CPU(Gameboy& inGb, Options& inOptions) :
     de(d, e),
     hl(h, l)
 {
+    a.set(0x01);
+    f.set(0xB0);
+    b.set(0x00);
+    c.set(0x13);
+    d.set(0x00);
+    e.set(0xD8);
+    h.set(0x01);
+    l.set(0x4D);
+    sp.set(0xFFFE);
+    pc.set(0x0100);
+
+    af.set(compose_bytes(a.value(), f.value()));
+    bc.set(compose_bytes(b.value(), c.value()));
+    de.set(compose_bytes(d.value(), e.value()));
+    hl.set(compose_bytes(h.value(), l.value()));
 }
 
 auto CPU::tick() -> Cycles {
     handle_interrupts();
 
     if (halted) { return 1; }
+    printf("Ly: %02X, SCX: %02X, SCY: %02X, A:%02X F:%02X B:%02X C:%02X D:%02X E:%02X H:%02X L:%02X SP:%04X PC:%04X PCMEM:%02X,%02X,%02X,%02X\n",
+           gb.video.line.value(), gb.video.scroll_x.value(), gb.video.scroll_y.value(), a.value(), f.value(), b.value(), c.value(), d.value(), e.value(), h.value(), l.value(),
+           sp.value(), pc.value(), gb.mmu.read(Address(pc)), gb.mmu.read(Address(pc.value() + 1)),
+           gb.mmu.read(Address(pc.value() + 2)), gb.mmu.read(Address(pc.value() + 3)));
 
     u16 opcode_pc = pc.value();
     auto opcode = get_byte_from_pc();

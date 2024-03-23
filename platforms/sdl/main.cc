@@ -186,10 +186,10 @@ int main(int argc, char* argv[]) {
     );
 
     auto rom_data = read_bytes(cliOptions.filename);
-    log_info("Read %d KB from %s", rom_data.size() / 1024, cliOptions.filename.c_str());
+    // log_info("Read %d KB from %s", rom_data.size() / 1024, cliOptions.filename.c_str());
 
     auto save_data = load_state();
-    log_info("");
+    // log_info("");
 
     gameboy = std::make_unique<Gameboy>(rom_data, cliOptions.options, save_data);
     gameboy->run(&is_closed, &draw);

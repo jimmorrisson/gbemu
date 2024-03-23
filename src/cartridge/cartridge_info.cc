@@ -16,11 +16,11 @@ auto get_info(std::vector<u8> rom) -> std::unique_ptr<CartridgeInfo> {
     info->ram_size = get_ram_size(ram_size_code);
     info->title = get_title(rom);
 
-    log_info("Title:\t\t %s (version %d)", info->title.c_str(), info->version);
-    log_info("Cartridge:\t\t %s", describe(info->type).c_str());
-    log_info("Rom Size:\t\t %s", describe(info->rom_size).c_str());
-    log_info("Ram Size:\t\t %s", describe(info->ram_size).c_str());
-    log_info("");
+    // log_info("Title:\t\t %s (version %d)", info->title.c_str(), info->version);
+    // log_info("Cartridge:\t\t %s", describe(info->type).c_str());
+    // log_info("Rom Size:\t\t %s", describe(info->rom_size).c_str());
+    // log_info("Ram Size:\t\t %s", describe(info->ram_size).c_str());
+    // log_info("");
 
     return info;
 }
